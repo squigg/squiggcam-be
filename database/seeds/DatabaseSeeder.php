@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -12,10 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Settings::set('phone.ip','192.168.1.121');
-        Settings::set('phone.port','1817');
-        Settings::set('notification.enabled',1);
-        Settings::set('notification.pause',1);
-        Settings::set('notification.pause_duration',1);
+        Settings::set('phone.ip', '192.168.1.121');
+        Settings::set('phone.port', '8080');
+        Settings::set('notification.enabled', 1);
+        Settings::set('notification.paused', 0);
+        Settings::set('notification.paused_duration', 60);
+        Settings::set('notification.unpause_at', null);
     }
 }

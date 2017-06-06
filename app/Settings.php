@@ -25,10 +25,20 @@ class Settings extends Model
 
     /**
      * @param string $key
+     * @return mixed|string
+     */
+    static function getGroup(string $key)
+    {
+        /** @noinspection PhpParamsInspection */
+        return static::where('key', 'like', $key . '%')->get();
+    }
+
+    /**
+     * @param string $key
      * @param string $value
      * @return Model
      */
-    static function set(string $key, string $value)
+    static function set(string $key, string $value = null)
     {
         /** @var Settings $setting */
         $setting = static::firstOrCreate(['key' => $key], ['value' => $value]);

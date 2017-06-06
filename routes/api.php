@@ -13,10 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Notification Routes
+Route::get('/notifications/settings', function (Request $request) {
+    return [
+        'enabled'        => 'true',
+        'paused'         => 'true',
+        'pause_duration' => '60',
+        'unpause_at'     => '2017-06-06 17:58:13',
+    ];
 });
 
-Route::get('/notifications', function (Request $request) {
-    return ['a' => 'b', 'message' => 'message'];
-});
+// Event Routes
+Route::post('/event/motion', 'EventController@motion')->name('event-motion');

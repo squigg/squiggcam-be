@@ -168,6 +168,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        NotificationChannels\Pushover\PushoverServiceProvider::class,
 
         /*
          * Application Service Providers...
