@@ -1,6 +1,7 @@
 <?php
 
 use App\Settings;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Settings::set('phone.ip', '192.168.1.121');
-        Settings::set('phone.port', '8080');
+        User::firstOrCreate(['name'     => 'Default',
+                             'email'    => 'squiggcam@squigg.co.uk',
+                             'password' => bcrypt('39847hb2n9028cy')
+        ]);
+        Settings::set('phone.ip', 'squigg.servegame.com');
+        Settings::set('phone.port', '17067');
         Settings::set('notification.enabled', 1);
         Settings::set('notification.paused', 0);
         Settings::set('notification.paused_duration', 60);

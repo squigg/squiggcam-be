@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\MotionDetected;
 use App\Notifications\MotionDetected as MotionDetectedNotification;
+use App\Settings;
 use App\User;
 use Carbon\Carbon;
 
@@ -29,7 +30,10 @@ class ProcessMotionDetection
     public function handle(MotionDetected $event)
     {
         /** @var User $user */
+        \Log::debug('MotionDetectedEvent raised');
         $user = User::first();
-        $user->notify(new MotionDetectedNotification($event->filename, Carbon::now()));
+        $shouldReport = Settings::get('notification.enabled') == '1';
+        \Log::debug('ShouldReport = ' . $shouldReport);
+        $user->notify(new MotionDetectedNotification($event->filename, Carbon::now(), $shouldReport));
     }
 }

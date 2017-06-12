@@ -14,14 +14,7 @@ use Illuminate\Http\Request;
 */
 
 // Notification Routes
-Route::get('/notifications/settings', function (Request $request) {
-    return [
-        'enabled'        => 'true',
-        'paused'         => 'true',
-        'pause_duration' => '60',
-        'unpause_at'     => '2017-06-06 17:58:13',
-    ];
-});
+Route::get('/notifications/status', 'NotificationController@status')->name('notification-status');
 
 // Event Routes
 Route::post('/event/motion', 'EventController@motion')->name('event-motion');

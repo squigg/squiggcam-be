@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * App\Settings
@@ -30,7 +31,12 @@ class Settings extends Model
     static function getGroup(string $key)
     {
         /** @noinspection PhpParamsInspection */
-        return static::where('key', 'like', $key . '%')->get();
+        $settings = static::where('key', 'like', $key . '%')->get();
+        $settings->map(function ($setting) use ($key) {
+            $setting->key = str_replace($key . '.', '', $setting->key);
+            return $setting;
+        });
+        return static::convertToArray($settings);
     }
 
     /**
@@ -53,6 +59,16 @@ class Settings extends Model
     static function getAll()
     {
         $settings = Settings::all();
+        return static::convertToArray($settings);
+
+    }
+
+    /**
+     * @param Collection $settings
+     * @return array
+     */
+    static function convertToArray(Collection $settings)
+    {
         $array = [];
         foreach ($settings as $setting) {
             array_set($array, $setting->key, $setting->value);

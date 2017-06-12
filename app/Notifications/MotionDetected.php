@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Channels\DatabaseChannel;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Pushover\PushoverChannel;
 use NotificationChannels\Pushover\PushoverMessage;
@@ -24,17 +25,24 @@ class MotionDetected extends Notification
      * @var string
      */
     protected $filename;
+    /**
+     * @var boolean
+     */
+    protected $shouldReport;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $filename
+     * @param $timestamp
+     * @param bool $shouldReport
      */
-    public function __construct($filename, $timestamp)
+    public function __construct($filename, $timestamp, $shouldReport = true)
     {
         $this->timestamp = $timestamp;
         $this->filename = $filename;
         $this->url = 'https://squigg.servegame.com/squiggcam/' . $filename;
+        $this->shouldReport = $shouldReport;
     }
 
     /**
@@ -45,7 +53,10 @@ class MotionDetected extends Notification
      */
     public function via($notifiable)
     {
-        return [PushoverChannel::class];
+        $channels = [DatabaseChannel::class];
+        if ($this->shouldReport) {
+            array_push($channels, PushoverChannel::class);
+        }
     }
 
     /**
@@ -54,6 +65,7 @@ class MotionDetected extends Notification
      */
     public function toPushover($notifiable)
     {
+        \Log::debug('Sending push notification with URL ' . $this->url);
         return PushoverMessage::create('New motion detected')->title('Motion Detected')->url($this->url, 'View video');
     }
 
