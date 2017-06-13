@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
                              'email'    => 'squiggcam@squigg.co.uk',
                              'password' => bcrypt('39847hb2n9028cy')
         ]);
-        Settings::set('phone.ip', 'squigg.servegame.com');
-        Settings::set('phone.port', '17067');
-        Settings::set('notification.enabled', 1);
-        Settings::set('notification.paused', 0);
-        Settings::set('notification.paused_duration', 60);
-        Settings::set('notification.unpause_at', null);
+        Settings::create(['key' => 'phone.ip', 'value' => 'squigg.servegame.com']);
+        Settings::create(['key' => 'phone.port', 'value' => '17067', 'type' => 'int']);
+        Settings::create(['key' => 'notification.enabled', 'value' => '1', 'type' => 'bool']);
+        Settings::create(['key' => 'notification.paused', 'value' => '0', 'type' => 'bool']);
+        Settings::create(['key' => 'notification.paused_duration', 'value' => '60', 'type' => 'int']);
+        Settings::create(['key' => 'notification.unpause_at', 'value' => null, 'type' => 'date']);
     }
 }

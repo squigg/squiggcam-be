@@ -14,7 +14,10 @@ use Illuminate\Http\Request;
 */
 
 // Notification Routes
-Route::get('/notifications/status', 'NotificationController@status')->name('notification-status');
+Route::get('/notification/status', 'NotificationController@status')->name('notification-status');
+Route::post('/notification/enable', 'NotificationController@enable')->name('notification-enable');
+Route::post('/notification/disable', 'NotificationController@disable')->name('notification-disable');
+Route::post('/notification/pause/{duration}', 'NotificationController@pause')->name('notification-pause');
 
 // Event Routes
 Route::post('/event/motion', 'EventController@motion')->name('event-motion');

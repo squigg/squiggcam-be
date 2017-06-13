@@ -11,9 +11,12 @@ use Illuminate\Support\Collection;
  * @mixin \Eloquent
  * @property string value
  * @property string key
+ * @property string type
  */
 class Settings extends Model
 {
+
+    protected $fillable = ['key', 'value'];
 
     /**
      * @param string $key
@@ -48,6 +51,7 @@ class Settings extends Model
     {
         /** @var Settings $setting */
         $setting = static::firstOrCreate(['key' => $key], ['value' => $value]);
+        \Log::debug($value);
         $setting->value = $value;
         $setting->save();
         return $setting;
@@ -74,6 +78,40 @@ class Settings extends Model
             array_set($array, $setting->key, $setting->value);
         }
         return $array;
+    }
+
+    public function getValueAttribute($value)
+    {
+        $type = $this->type;
+        switch ($type) {
+            case "bool":
+                $value = $value == 1;
+                break;
+            case "int":
+                $value = (int)$value;
+                break;
+            case "date":
+                $value = is_null($value) || $value == '' ? $value : $this->asDateTime($value)->toIso8601String();
+                break;
+        }
+        return $value;
+    }
+
+    public function setValueAttribute($value)
+    {
+        $type = $this->type;
+        switch ($type) {
+            case "bool":
+                $value = ($value) ? 1 : 0;
+                break;
+            case "int":
+                $value = (int)$value;
+                break;
+            case "date":
+                $value = is_null($value) || $value == '' ? $value : $this->fromDateTime($value);
+                break;
+        }
+        $this->attributes['value'] = $value;
     }
 
 }
