@@ -57,6 +57,7 @@ class MotionDetected extends Notification
         if ($this->shouldReport) {
             array_push($channels, PushoverChannel::class);
         }
+        return $channels;
     }
 
     /**
@@ -65,7 +66,7 @@ class MotionDetected extends Notification
      */
     public function toPushover($notifiable)
     {
-        \Log::debug('Sending push notification with URL ' . $this->url);
+        \Log::debug('Sending Pushover notification with URL ' . $this->url);
         return PushoverMessage::create('New motion detected')->title('Motion Detected')->url($this->url, 'View video');
     }
 

@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Settings;
+use App\User;
 use Carbon\Carbon;
 
 class NotificationController extends Controller
 {
+
+    public function list()
+    {
+        $user = User::all()->first();
+        $notifications = $user->notifications;
+        return $notifications;
+    }
 
     public function status()
     {
@@ -36,7 +44,8 @@ class NotificationController extends Controller
         Settings::set('notification.paused', true);
         Settings::set('notification.paused_duration', $duration);
         Settings::set('notification.unpause_at', Carbon::now()->addMinutes($duration));
-        \Log::debug('Pausing for ' . $duration . ' minutes, resuming at ' . Carbon::now()->addMinutes($duration)->toIso8601String());
+        \Log::debug('Pausing for ' . $duration . ' minutes, resuming at ' . Carbon::now()->addMinutes($duration)
+                                                                                  ->toIso8601String());
         return $this->status();
     }
 }

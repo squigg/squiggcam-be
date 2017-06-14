@@ -32,7 +32,7 @@ class ProcessMotionDetection
         /** @var User $user */
         \Log::debug('MotionDetectedEvent raised');
         $user = User::first();
-        $shouldReport = Settings::get('notification.enabled') == '1';
+        $shouldReport = Settings::get('notification.enabled') ? true : false;
         \Log::debug('ShouldReport = ' . $shouldReport);
         $user->notify(new MotionDetectedNotification($event->filename, Carbon::now(), $shouldReport));
     }

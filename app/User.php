@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\Pushover\PushoverReceiver;
 
 /**
  * App\User
@@ -36,4 +37,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function routeNotificationForPushover()
+    {
+        \Log::debug('Sending PushoverReceiver');
+        return PushoverReceiver::withGroupKey(env('PUSHOVER_GROUP_KEY'));
+    }
 }
