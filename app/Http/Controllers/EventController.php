@@ -24,6 +24,7 @@ class EventController extends Controller
     {
         \Log::debug('Motion POST request received');
         $filename = $this->cameraService->getCurrentMotionFilename();
+        str_replace('/modet/', '', $filename);
         \Log::debug('Motion Filename is ' . $filename);
         event(new MotionDetected($filename));
     }
