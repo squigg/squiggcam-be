@@ -12,8 +12,12 @@
 */
 
 // Notification Routes
+Route::get('/notification/list/{unread?}', 'NotificationController@list')->name('notification-list');
+Route::get('/notification/unread', 'NotificationController@unreadCount')->name('notification-unread');
+Route::post('/notification/{id}/read', 'NotificationController@markAsRead')->name('notification-markAsRead');
+Route::post('/notification/read', 'NotificationController@markAllRead')->name('notification-markAllRead');
+
 Route::get('/notification/status', 'NotificationController@status')->name('notification-status');
-Route::get('/notification/list', 'NotificationController@list')->name('notification-list');
 Route::post('/notification/enable', 'NotificationController@enable')->name('notification-enable');
 Route::post('/notification/disable', 'NotificationController@disable')->name('notification-disable');
 Route::post('/notification/pause/{duration}', 'NotificationController@pause')->name('notification-pause');

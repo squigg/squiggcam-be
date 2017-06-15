@@ -79,9 +79,8 @@ class MotionDetected extends Notification
     public function toArray($notifiable)
     {
         return [
-            'timestamp' => $this->timestamp->toFormattedDateString(),
-            'url'       => $this->url,
             'filename'  => $this->filename,
+            'timestamp' => $this->timestamp->toIso8601String(),
         ];
     }
 }
