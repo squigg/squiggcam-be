@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\CameraService;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(\CameraService::class, \CameraService::class);
+        $this->app->singleton(CameraService::class, CameraService::class);
+
+        if (!$this->app->environment('production')) {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
     }
 }
