@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Console;
 
 use App\Settings;
 use Carbon\Carbon;
