@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             if (Settings::get('notification.paused')) {
                 /** @var Carbon $unpause */
-                $unpause = Settings::get('notification.unpause_at');
+                $unpause = new Carbon(Settings::get('notification.unpause_at'));
                 if (Carbon::now()->greaterThan($unpause)) {
                     Settings::set('notification.paused', false);
                     Settings::set('notification.enabled', true);
