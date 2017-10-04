@@ -28,13 +28,13 @@ class CameraController extends Controller
 
     public function enableMotion()
     {
-        $this->cameraService->setMotionDetection(false);
+        $this->cameraService->setMotionDetection(true);
         return ['message' => 'Motion sensing enabled'];
     }
 
     public function disableMotion()
     {
-        $this->cameraService->setMotionDetection(true);
+        $this->cameraService->setMotionDetection(false);
         return ['message' => 'Motion sensing disabled'];
     }
 
