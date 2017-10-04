@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Settings;
 use GuzzleHttp\Client;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Created by PhpStorm.
@@ -46,13 +47,33 @@ class CameraService
      * @param $method
      * @param $uri
      * @param array $data
-     * @return array
+     * @param bool $asJson
+     * @return array|StreamInterface|string
      */
-    protected function makeRequest($method, $uri, $data = [])
+    protected function makeRequest($method, $uri, $data = [], $asJson = true)
     {
         $response = $this->client->request($method, $uri, ['json' => $data]);
         $response->getBody()->getContents();
-        return json_decode($response->getBody(), true);
+        return ($asJson) ? json_decode($response->getBody(), true) : $response->getBody();
+    }
+
+    public function getStatus()
+    {
+        $data = $this->makeRequest('get', 'status.json');
+        return $data;
+    }
+
+    public function setMotionSensitivity(int $limit = 250)
+    {
+        $data = $this->makeRequest('get', 'settings/motion_limit?set=' . $limit, [], false);
+        return $data;
+    }
+
+    public function setMotionDetection(bool $enabled = true)
+    {
+        $param = $enabled ? 'on' : 'off';
+        $data = $this->makeRequest('get', 'settings/motion_detect?set=' . $param, [], false);
+        return $data;
     }
 
 }

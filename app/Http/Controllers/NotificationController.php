@@ -14,7 +14,7 @@ class NotificationController extends Controller
     public function list($unread = false)
     {
         $user = User::all()->first();
-        $notifications = $unread ? $user->unreadNotifications()->get() : $user->notifications;
+        $notifications = $unread ? $user->unreadNotifications()->paginate() : $user->notifications()->paginate();
         /** @var Collection $notifications */
         $notifications->map(function ($notification) {
             $notification = $notification->toArray();

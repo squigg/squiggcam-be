@@ -22,5 +22,10 @@ Route::post('/notification/enable', 'NotificationController@enable')->name('noti
 Route::post('/notification/disable', 'NotificationController@disable')->name('notification-disable');
 Route::post('/notification/pause/{duration}', 'NotificationController@pause')->name('notification-pause');
 
+// Camera Routes
+Route::get('/camera/status', 'CameraController@status')->name('camera-status');
+Route::post('/camera/motion/disable', 'CameraController@enableMotion')->name('camera-motion-enable');
+Route::post('/camera/motion/enable', 'CameraController@disableMotion')->name('camera-motion-disable');
+
 // Event Routes
 Route::post('/event/motion', 'EventController@motion')->name('event-motion');

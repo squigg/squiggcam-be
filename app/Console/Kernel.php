@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ChangeSetting;
 use App\Settings;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
@@ -15,7 +16,8 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    protected $commands = [//
+    protected $commands = [
+        ChangeSetting::class
     ];
 
     /**
