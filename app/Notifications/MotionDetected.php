@@ -41,7 +41,7 @@ class MotionDetected extends Notification
     {
         $this->timestamp = $timestamp;
         $this->filename = $filename;
-        $this->url = 'https://squigg.servegame.com:17067/squiggcam/video/' . $filename;
+        $this->url = 'https://squiggcam.squigg.co.uk:17067/squiggcam/video/' . $filename;
         $this->shouldReport = $shouldReport;
     }
 
