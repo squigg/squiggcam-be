@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Settings;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\StreamInterface;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 /**
  * Created by PhpStorm.
@@ -52,9 +54,13 @@ class CameraService
      */
     protected function makeRequest($method, $uri, $data = [], $asJson = true)
     {
-        $response = $this->client->request($method, $uri, ['json' => $data]);
-        $response->getBody()->getContents();
-        return ($asJson) ? json_decode($response->getBody(), true) : $response->getBody();
+        try {
+            $response = $this->client->request($method, $uri, ['json' => $data]);
+            $response->getBody()->getContents();
+            return ($asJson) ? json_decode($response->getBody(), true) : $response->getBody();
+        } catch (GuzzleException $e) {
+            throw new ServiceUnavailableHttpException(null, $e->getMessage(), $e);
+        }
     }
 
     public function getStatus()
