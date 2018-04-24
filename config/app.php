@@ -168,6 +168,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         NotificationChannels\Pushover\PushoverServiceProvider::class,
+        \Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Application Service Providers...
